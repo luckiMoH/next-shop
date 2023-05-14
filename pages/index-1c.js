@@ -1,15 +1,15 @@
+// option 1: fetch products on the server side (in getServerSideProps);
 import Head from 'next/head'
 import { Title } from '@/components/Title/Title';
 import { getProducts } from '../lib/products';
 
-export async function getStaticProps() {
-  console.log('[HomePage] getStaticProps()');
+export async function getServerSideProps() {
+  console.log('[HomePage] getServerSideProps()');
   const products = await getProducts();
   return {
     props: {
       products
-    },
-    revalidate: 5 * 60, // seconds
+    }
   };
 }
 
@@ -23,9 +23,9 @@ export default function Home({ products }) {
   return (
     <>
     <Head>
-      <title>Next shop</title>
+      <title>Next shop1</title>
     </Head>
-      <Title>Next Shop</Title>
+      <Title>Next Shop1c</Title>
       <ul>
         {products.map((product) => {
           return (

@@ -1,3 +1,5 @@
+// option 1a: fetch products on the server side 
+// but with Incremental Static Regeneration (in getStaticProps);
 import Head from 'next/head'
 import { Title } from '@/components/Title/Title';
 import { getProducts } from '../lib/products';
@@ -9,7 +11,7 @@ export async function getStaticProps() {
     props: {
       products
     },
-    revalidate: 5 * 60, // seconds
+    revalidate: 30, // seconds
   };
 }
 
@@ -23,9 +25,9 @@ export default function Home({ products }) {
   return (
     <>
     <Head>
-      <title>Next shop</title>
+      <title>Next shop1</title>
     </Head>
-      <Title>Next Shop</Title>
+      <Title>Next Shop1b</Title>
       <ul>
         {products.map((product) => {
           return (
