@@ -1,15 +1,16 @@
-import Head from 'next/head'
-import { Title } from '@/components/Title/Title';
-import { getProducts } from '../lib/products';
+import Head from "next/head";
+import { Title } from "@/components/Title/Title";
+import { getProducts } from "../lib/products";
+import Link from "next/link";
 
 export async function getStaticProps() {
-  console.log('[HomePage] getStaticProps()');
+  console.log("[HomePage] getStaticProps()");
   const products = await getProducts();
   return {
     props: {
-      products
+      products,
     },
-    revalidate: 5 * 60, // seconds
+    revalidate: parseInt(process.env.REVALIDATE_SECONDS),
   };
 }
 
@@ -19,20 +20,24 @@ export async function getStaticProps() {
 // ]
 
 export default function Home({ products }) {
-  console.log('[HomePage] render:', products);
+  console.log("[HomePage] render:", products);
   return (
     <>
-    <Head>
-      <title>Next shop</title>
-    </Head>
-      <Title>Next Shop</Title>
-      <ul>
-        {products.map((product) => {
-          return (
-            <li key={product.id}>{product.title}</li>
-          )
-        })}
-      </ul>
+      <Head>
+        <title>Next shop</title>
+      </Head>
+      <main className="px-6 py-4">
+        <Title>Next Shop</Title>
+        <ul>
+          {products.map((product) => {
+            return (
+              <Link href={`/products/${product.id}`} key={product.id}>
+                <li >{product.title}</li>
+              </Link>
+            );
+          })}
+        </ul>
+      </main>
     </>
-  )
+  );
 }
